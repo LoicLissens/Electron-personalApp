@@ -1,0 +1,48 @@
+@import "libs/colorvar";
+body {
+  height: 100vh;
+  background-color: #663399;
+  color: white;
+  overflow: hidden;
+}
+h1 {
+  margin-top: 20px;
+  text-align: center;
+}
+h2 {
+  text-align: center;
+}
+
+#logo {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+.box-hub {
+  text-align: center;
+  margin-top: 50px;
+
+  .box {
+    border-radius: 5px;
+    width: 400px;
+    height: 300px;
+    margin: 10px;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 0px 5px 3px #fd5e53;
+    }
+  }
+}
+.bulma-cite {
+  bottom: 0px;
+  div {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
+.footer {
+  height: 50px;
+  background-color: transparent;
+  margin: 0;
+}

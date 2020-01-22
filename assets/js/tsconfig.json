@@ -1,0 +1,10 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "noEmitOnError": false,
+    "strict": true,
+    "noImplicitAny": false
+  }
+}
