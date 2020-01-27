@@ -46,3 +46,21 @@ h2 {
   background-color: transparent;
   margin: 0;
 }
+///
+.loader-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+
+  img {
+    user-select: none;
+  }
+  .title-splash {
+    color: #fd5e53;
+    user-select: none;
+  }
+}

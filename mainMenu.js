@@ -1,7 +1,7 @@
 module.exports = [
   {
-    label: "Devhub",
-    submenu: [{ label: "Devhub1" }, { label: "Devhub2", submenu: [{ label: "love chris" }] }, { label: "Devhub3", submenu: [{ label: "and louis" }] }]
+    label: "Colta",
+    submenu: [{ label: "Colta1" }, { label: "Colta2", submenu: [{ label: "love chris" }] }, { label: "Colta", submenu: [{ label: "and louis" }] }]
   },
   {
     label: "Brice",

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" href="../assets/css/bulma.min.css" />
+    <link rel="stylesheet" href="../assets/css/style.min.css" />
+    <title>Personal hub</title>
+  </head>
+  <body>
+    <div class="columns is-centered">
+      <div class="column">
+        <img id="logo" src="../assets/img/devHubLogo.svg" height="100px" width="100px" alt="Colta" draggable="false" />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <h1 class="title is-1">Good to see you user !</h1>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <h2 class="title is-2">What's up today ?</h2>
+      </div>
+    </div>
+    <div class="columns is-centered  box-hub">
+      <div id="routine-box" class="column is-3 box">
+        <h3 class="title is-3">Dayli Routine</h3>
+        <img src="../assets/img/todo.svg" draggable="false" />
+      </div>
+
+      <div class="column is-3 box" id="hobbies-box">
+        <h3 class="title is-3">Hobbies</h3>
+        <img src="../assets/img/music.svg" draggable="false" />
+      </div>
+      <div class="column is-3 box" id="work-box">
+        <h3 class="title is-3">Work</h3>
+        <img src="../assets/img/code 1.svg" draggable="false" />
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="columns bulma-cite">
+        <div class="column is-2">
+          <img src="../assets/img/made-with-bulma--dark.png" draggable="false" />
+        </div>
+      </div>
+    </footer>
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>

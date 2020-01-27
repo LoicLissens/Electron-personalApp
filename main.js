@@ -1,40 +1,34 @@
 //* Modules to control application life and create native browser window
-const { app, BrowserWindow, webContents, session, Menu, MenuItem, Tray } = require("electron");
+const { app, BrowserWindow, webContents, session, Menu, MenuItem, Tray, ipcMain } = require("electron");
 const path = require("path");
-
+//* MENU AND WINDOW DECLARATION
 //! Keep a global reference of the window object, if you don't, the window will
 //! be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, secondaryWindow, tray;
+let mainWindow, secondaryWindow, trayn, splahWindow;
 
+const trayMenu = Menu.buildFromTemplate([{ label: "Quit app", role: "quit" }]);
 function createTray() {
   tray = new Tray("icon_29@2x.png");
-  tray.setToolTip("DevHub");
+  tray.setToolTip("Colta");
+  tray.setContextMenu(trayMenu);
 }
 
 let mainMenu = new Menu.buildFromTemplate(require("./mainMenu"));
 
 function createWindow() {
-  //* set tray
-  createTray();
-  //* Define a custom session to store with a partition in the memory
-  //session is a module of electron need ot be required
-  let getCookies = () => {
-    let sess = session.defaultSession;
-    sess.cookies.get({}, (err, cookies) => {
-      console.log(cookies);
-    });
-  };
-  //* Create the browser window.
+  //? Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
     minWidth: 800,
     minHeight: 480,
     titleBarStyle: "hidden",
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
     }
   });
+  //? Modal box
   secondaryWindow = new BrowserWindow({
     height: 150,
     width: 800,
@@ -42,56 +36,71 @@ function createWindow() {
     modal: true,
     show: false
   });
+  //? splash screen
+  splahWindow = new BrowserWindow({ width: 300, height: 300, transparent: true, frame: false, alwaysOnTop: true, hasShadow: false });
 
-  //* and load the index.html of the app.
-  mainWindow.loadFile("index.html");
+  //? initial html load to window
+  mainWindow.loadFile("view/index.html");
+  secondaryWindow.loadFile("view/modal.html");
+  splahWindow.loadFile("view/splash.html");
 
-  secondaryWindow.loadFile("modal.html");
-  //* menu
+  //? set menu
   Menu.setApplicationMenu(mainMenu);
-
+  //? Display the modal box after two sec for 3 sec
   setTimeout(() => {
     secondaryWindow.show();
     setTimeout(() => {
       secondaryWindow.close();
       secondaryWindow = null;
     }, 3000);
-  }, 2000);
-  //* Webcontent, wc is a module of electron and need to be require
+  }, 5000);
+  //TODO Webcontent, wc is a module of electron and need to be require, do i use it ?
+
   let wc = mainWindow.webContents;
 
-  //* Emitted when the window is closed.
+  //? Closed window event
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+//* HANDLE LAUCNH AND QUIT APP
+//? Doing the folling action when app is ready
 app.on("ready", () => {
-  console.log("app ready");
-  console.log(app.getPath("desktop"));
-  console.log(app.getPath("music"));
-  console.log(app.getPath("temp"));
-  console.log(app.getPath("userData"));
-
+  //? set tray
+  createTray();
+  //? set window
   createWindow();
-  mainWindow.maximize();
+  mainWindow.once("ready-to-show", () => {
+    // Show a slapsh screen when launching the app
+    setTimeout(() => {
+      splahWindow.destroy();
+      splahWindow = null;
+      mainWindow.show();
+      mainWindow.maximize();
+    }, 2000);
+  });
 });
-
-// Quit when all windows are closed.
+//? Quit when all windows are closed.
 app.on("window-all-closed", function() {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") app.quit();
 });
 
 app.on("activate", function() {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+//* EVENTS HANDLER
+//? reload the mains page with differents html page following the event
+ipcMain.on("open-routine", (event) => {
+  mainWindow.loadFile("view/dayli-routine.html");
+});
+ipcMain.on("open-hobbies", (event) => {
+  mainWindow.loadFile("view/hobbies.html");
+});
+ipcMain.on("open-work", (event) => {
+  mainWindow.loadFile("view/work.html");
+});
+ipcMain.on("return-menu", (event) => {
+  mainWindow.loadFile("index.html");
+});
